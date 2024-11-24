@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf.WellKnownTypes;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,23 +34,14 @@ namespace WpfArasoi.ViewModel
 
         public void ResponseToCreateManager(string email, string password, string confirmPassword, string privilegesType)
         {
-            if (!Email.IsValidEmail(email))
-            {
-                MessageBox.Show("Insira um email válido");
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirmPassword) ||
+                string.IsNullOrWhiteSpace(privilegesType)) throw new LackOfData();
 
-            if (password != password.Replace(" ", ""))
-            {
-                MessageBox.Show("A senha não pode conter espaços");
-                return;
-            }
+            if (!Email.IsValidEmail(email)) throw new InvalidEmail();
 
-            if (password != confirmPassword)
-            {
-                MessageBox.Show("As senhas estão diferentes");
-                return;
-            }
+            if (password != confirmPassword) throw new MismatchingPassword();
 
             Manager.CreateManager(email, password, privilegesType);
         }

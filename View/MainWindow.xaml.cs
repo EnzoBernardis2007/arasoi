@@ -40,13 +40,37 @@ namespace WpfArasoi.View
 
         private void SignupClick(object sender, RoutedEventArgs e)
         {
-            string email = EmailTextBox.Text;
-            string password = PasswordPBox.Password;
-            string confirmPassword = ConfirmPasswordBox.Password;
-            var comboBoxSelected = PrivilegesComboBox.SelectedItem as ComboBoxItem;
-            string privilegesType = comboBoxSelected.Tag.ToString();
+            try
+            {
+                string email = EmailTextBox.Text;
+                string password = PasswordPBox.Password;
+                string confirmPassword = ConfirmPasswordBox.Password;
 
-            viewModel.ResponseToCreateManager(email, password, confirmPassword, privilegesType);
+                var comboBoxSelected = PrivilegesComboBox.SelectedItem as ComboBoxItem;
+
+                if (comboBoxSelected == null) throw new LackOfData();
+
+                string privilegesType = comboBoxSelected.Tag.ToString();
+
+                viewModel.ResponseToCreateManager(email, password, confirmPassword, privilegesType);
+                MessageBox.Show("Registrado!");
+            }
+            catch (LackOfData ex)
+            {
+                MessageBox.Show("Insira todos os dados");
+            }
+            catch (InvalidEmail ex) 
+            {
+                MessageBox.Show("Email inválido");
+            }
+            catch (MismatchingPassword ex)
+            {
+                MessageBox.Show("As senhas não coincidem");
+            }
+            catch
+            {
+                MessageBox.Show("Erro ao criar usuário");
+            }
         }
     }
 }
