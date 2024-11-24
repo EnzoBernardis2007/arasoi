@@ -30,23 +30,21 @@ namespace WpfArasoi.View
 
         private void LoginButton(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-
-            return;
-
             string email = EmailTextBox.Text;
             string password = PasswordBox.Password;
 
-            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password)) 
+            if (!Email.IsValidEmail(email) || string.IsNullOrWhiteSpace(password)) 
             {
-                MessageBox.Show("Preencha todos os campos");
+                MessageBox.Show("Preencha todos os campos de forma válida");
                 return;
             }
             
             if (Password.ValidPassword(email, password))
             {
                 MessageBox.Show("Entrando..........");
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
             } else
             {
                 MessageBox.Show("Senha ou email errado");

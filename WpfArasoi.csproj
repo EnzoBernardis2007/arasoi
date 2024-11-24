@@ -112,6 +112,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database\ConnectionFactory.cs" />
+    <Compile Include="Model\Email.cs" />
     <Compile Include="Model\Password.cs" />
     <Compile Include="Model\Privileges.cs" />
     <Compile Include="Model\StringFormatter.cs" />

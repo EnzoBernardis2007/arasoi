@@ -28,19 +28,19 @@
                     
                     <!-- Email field -->
                     <Label Content="Email:" Grid.Row="0"/>
-                    <TextBox Grid.Row="1"/>
+                    <TextBox x:Name="EmailTextBox" Grid.Row="1"/>
                     
                     <!-- Password fields -->
                     <Label Content="Senha:" Grid.Row="2"/>
-                    <TextBox Grid.Row="3"/>
+                    <PasswordBox x:Name="PasswordPBox" Grid.Row="3"/>
 
                     <Label Content="Confirmar senha:" Grid.Row="4"/>
-                    <TextBox Grid.Row="5"/>
+                    <PasswordBox x:Name="ConfirmPasswordBox" Grid.Row="5"/>
                     
                     <!-- Privileges field -->
                     <ComboBox x:Name="PrivilegesComboBox" Grid.Row="6" />
 
-                    <Button Content="Registrar" Grid.Row="7"/>
+                    <Button Click="SignupClick" Content="Registrar" Grid.Row="7"/>
                 </Grid>
             </TabItem>
         </TabControl>

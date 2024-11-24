@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfArasoi.Database;
 
 namespace WpfArasoi.Model
@@ -20,10 +21,31 @@ namespace WpfArasoi.Model
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@email", email);
 
-                MySqlDataReader readerSelectSalt = command.ExecuteReader();
+                MySqlDataReader reader = command.ExecuteReader();
+                reader.Read();
 
-                return readerSelectSalt["salt"].ToString();
+                return reader["salt"].ToString();
             }
+        }
+
+        public static string GenerateSalt()
+        {
+            int length = 32;
+            int byteCount = length / 2;
+
+            byte[] saltBytes = new byte[byteCount];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(saltBytes);
+            }
+
+            StringBuilder saltHex = new StringBuilder(length);
+            foreach (byte b in saltBytes)
+            {
+                saltHex.Append(b.ToString("x2"));
+            }
+
+            return saltHex.ToString();
         }
 
         public static string GenerateHash(string password, string salt) 
