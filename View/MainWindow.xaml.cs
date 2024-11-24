@@ -30,8 +30,10 @@ namespace WpfArasoi.View
         {
             InitializeComponent();
 
-
             viewModel = new MainWindowViewModel();
+            this.DataContext = viewModel;
+
+            viewModel.LoadManagersList();
 
             if (!viewModel.VisibleTabs(email))
             {

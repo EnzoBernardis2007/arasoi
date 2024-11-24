@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using WpfArasoi.Database;
 
 namespace WpfArasoi.Model
 {
-    internal static class Manager
+    internal class Manager
     {
         // Add a new manager in the database
         public static void CreateManager(string email, string password, string privilegesType)
@@ -35,6 +36,26 @@ namespace WpfArasoi.Model
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public static ObservableCollection<ManagerModel> GetManangersList()
+        {
+            ObservableCollection<ManagerModel> managerModels = new ObservableCollection<ManagerModel>();
+
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "SELECT email FROM manager";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    managerModels.Add(new ManagerModel() { Email = reader["email"].ToString() });
+                }
+            }
+
+            return managerModels;
         }
 
         public static string GetPrivilegeTypeFromEmail(string email) 

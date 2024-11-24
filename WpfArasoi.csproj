@@ -115,6 +115,7 @@
     <Compile Include="Model\ArasoiExceptions.cs" />
     <Compile Include="Model\Email.cs" />
     <Compile Include="Model\Manager.cs" />
+    <Compile Include="Model\ManagerModel.cs" />
     <Compile Include="Model\Password.cs" />
     <Compile Include="Model\Privileges.cs" />
     <Compile Include="Model\StringFormatter.cs" />
