@@ -24,11 +24,15 @@ namespace WpfArasoi.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowViewModel viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            foreach (ComboBoxItem comboBoxItem in MainWindowViewModel.CreatePrivilegesComboBox())
+            viewModel = new MainWindowViewModel();
+
+            foreach (ComboBoxItem comboBoxItem in viewModel.CreatePrivilegesComboBox())
             {
                 PrivilegesComboBox.Items.Add(comboBoxItem);
             }
@@ -42,45 +46,7 @@ namespace WpfArasoi.View
             var comboBoxSelected = PrivilegesComboBox.SelectedItem as ComboBoxItem;
             string privilegesType = comboBoxSelected.Tag.ToString();
 
-            if(!Email.IsValidEmail(email))
-            {
-                MessageBox.Show("Insira um email válido");
-                return;
-            }
-
-            if(password != password.Replace(" ", ""))
-            {
-                MessageBox.Show("A senha não pode conter espaços");
-                return;
-            }
-
-            if(password != confirmPassword)
-            {
-                MessageBox.Show("As senhas estão diferentes");
-                return;
-            }
-
-            using (MySqlConnection connection = ConnectionFactory.GetConnection())
-            {
-                string salt = Password.GenerateSalt();
-                string password_hash = Password.GenerateHash(password, salt);
-
-                string[] parameters = { "@email", "@password_hash", "@salt", "@privileges_name" };
-                string[] values = { email, password_hash, salt, privilegesType };
-
-                string query = "INSERT INTO manager VALUES (UUID(), @email, @password_hash, @salt, @privileges_name)";
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    for (int i = 0; i < parameters.Length; i++)
-                    {
-                        command.Parameters.AddWithValue(parameters[i], values[i]);
-                    }
-
-                    command.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Entrou!");
-            }
+            viewModel.ResponseToCreateManager(email, password, confirmPassword, privilegesType);
         }
     }
 }

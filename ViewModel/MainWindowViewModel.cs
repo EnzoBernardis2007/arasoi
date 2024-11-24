@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using WpfArasoi.Database;
 using WpfArasoi.Model;
@@ -13,7 +14,7 @@ namespace WpfArasoi.ViewModel
 {
     internal class MainWindowViewModel
     {
-        public static ComboBoxItem[] CreatePrivilegesComboBox()
+        public ComboBoxItem[] CreatePrivilegesComboBox()
         {
             string[] privileges = Privileges.GetPrivilegesId();
             ComboBoxItem[] comboBoxItems = new ComboBoxItem[privileges.Length];
@@ -28,6 +29,29 @@ namespace WpfArasoi.ViewModel
             }
 
             return comboBoxItems;
+        }
+
+        public void ResponseToCreateManager(string email, string password, string confirmPassword, string privilegesType)
+        {
+            if (!Email.IsValidEmail(email))
+            {
+                MessageBox.Show("Insira um email válido");
+                return;
+            }
+
+            if (password != password.Replace(" ", ""))
+            {
+                MessageBox.Show("A senha não pode conter espaços");
+                return;
+            }
+
+            if (password != confirmPassword)
+            {
+                MessageBox.Show("As senhas estão diferentes");
+                return;
+            }
+
+            Manager.CreateManager(email, password, privilegesType);
         }
     }
 }
