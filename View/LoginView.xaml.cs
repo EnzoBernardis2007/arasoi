@@ -42,7 +42,7 @@ namespace WpfArasoi.View
             if (Password.ValidPassword(email, password))
             {
                 MessageBox.Show("Entrando..........");
-                MainWindow mainWindow = new MainWindow();
+                MainWindow mainWindow = new MainWindow(email);
                 mainWindow.Show();
                 this.Close();
             } else

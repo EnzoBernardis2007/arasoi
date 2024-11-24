@@ -18,14 +18,14 @@ namespace WpfArasoi.Model
                 MySqlCommand command = new MySqlCommand(query, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
-                string[] names = new string[reader.FieldCount];
+                List<string> names = new List<string>();
 
-                for(int i = 0; reader.Read(); i++)
+                while (reader.Read()) 
                 {
-                    names[i] = reader["name"].ToString();
+                    names.Add(reader["name"].ToString());
                 }
                 
-                return names;
+                return names.ToArray();
             }
         } 
     }

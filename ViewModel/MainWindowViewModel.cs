@@ -32,6 +32,11 @@ namespace WpfArasoi.ViewModel
             return comboBoxItems;
         }
 
+        public bool VisibleTabs(string email)
+        {
+            return Manager.GetPrivilegeTypeFromEmail(email) == "admin";
+        }
+
         public void ResponseToCreateManager(string email, string password, string confirmPassword, string privilegesType)
         {
             if (string.IsNullOrWhiteSpace(email) ||

@@ -36,5 +36,20 @@ namespace WpfArasoi.Model
                 }
             }
         }
+
+        public static string GetPrivilegeTypeFromEmail(string email) 
+        {
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "SELECT privileges_name FROM manager WHERE email = @email";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@email", email);
+                MySqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+
+                return reader["privileges_name"].ToString();
+            }
+        }
     }
 }

@@ -26,11 +26,17 @@ namespace WpfArasoi.View
     {
         MainWindowViewModel viewModel;
 
-        public MainWindow()
+        public MainWindow(string email)
         {
             InitializeComponent();
 
+
             viewModel = new MainWindowViewModel();
+
+            if (!viewModel.VisibleTabs(email))
+            {
+                UsersTab.Visibility = Visibility.Collapsed;
+            }
 
             foreach (ComboBoxItem comboBoxItem in viewModel.CreatePrivilegesComboBox())
             {

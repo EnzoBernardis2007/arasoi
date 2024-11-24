@@ -13,7 +13,7 @@
             </TabItem>
             
             <!-- Tab to register new managers -->
-            <TabItem Header="Usuários">
+            <TabItem x:Name="UsersTab" Header="Usuários">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
