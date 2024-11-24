@@ -51,7 +51,10 @@
                     <ListBox ItemsSource="{Binding Managers}" Grid.Row="0" Grid.RowSpan="8" Grid.Column="1">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Email}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Email}"/>
+                                    <Button Content="Deletar" Command="{Binding Delete}"/>
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

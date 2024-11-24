@@ -32,7 +32,7 @@ namespace WpfArasoi.ViewModel
 
         public void LoadManagersList()
         {
-            Managers = Manager.GetManangersList();
+            Managers = Manager.GetManangersList(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -75,6 +75,7 @@ namespace WpfArasoi.ViewModel
             if (password != confirmPassword) throw new MismatchingPassword();
 
             Manager.CreateManager(email, password, privilegesType);
+            LoadManagersList();
         }
     }
 }

@@ -118,6 +118,7 @@
     <Compile Include="Model\ManagerModel.cs" />
     <Compile Include="Model\Password.cs" />
     <Compile Include="Model\Privileges.cs" />
+    <Compile Include="Model\RelayCommand.cs" />
     <Compile Include="Model\StringFormatter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\LoginView.xaml.cs">

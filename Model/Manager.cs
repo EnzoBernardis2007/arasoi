@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfArasoi.Database;
+using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.Model
 {
@@ -38,7 +39,8 @@ namespace WpfArasoi.Model
             }
         }
 
-        public static ObservableCollection<ManagerModel> GetManangersList()
+        // Get a list of ManagerModel objects 
+        public static ObservableCollection<ManagerModel> GetManangersList(MainWindowViewModel viewModel)
         {
             ObservableCollection<ManagerModel> managerModels = new ObservableCollection<ManagerModel>();
 
@@ -51,13 +53,14 @@ namespace WpfArasoi.Model
 
                 while (reader.Read())
                 {
-                    managerModels.Add(new ManagerModel() { Email = reader["email"].ToString() });
+                    managerModels.Add(new ManagerModel(reader["email"].ToString(), viewModel));
                 }
             }
 
             return managerModels;
         }
 
+        // Gets the privileges from a user
         public static string GetPrivilegeTypeFromEmail(string email) 
         {
             using (MySqlConnection connection = ConnectionFactory.GetConnection())
