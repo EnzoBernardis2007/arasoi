@@ -96,6 +96,7 @@ namespace WpfArasoi.ViewModel
          * |    CHAMPIONSHIPS TAB ↓    |
          * ----------------------------- */
 
+        // Binding to show championships
         private ObservableCollection<ChampionshipModel> _championships;
         public ObservableCollection<ChampionshipModel> Championships
         {
@@ -112,7 +113,7 @@ namespace WpfArasoi.ViewModel
 
         public void LoadChampionshipsList()
         {
-            Championships = Championship.GetChampionshipList();
+            Championships = Championship.GetChampionshipInfoList();
         }
 
         /* -----------------------------

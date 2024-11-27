@@ -29,6 +29,9 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <Label Content="{Binding Name}"/>
+                                    <Label Content="{Binding DateBegin}"/>
+                                    <Label Content="{Binding DateEnd}"/>
+                                    <Label Content="{Binding InscriptionCount}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

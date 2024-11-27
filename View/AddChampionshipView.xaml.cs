@@ -31,9 +31,16 @@ namespace WpfArasoi.View
 
         private void AddChampionshipClickFirstStep(object sender, RoutedEventArgs e)
         {
-            championship = new ChampionshipModel(NameTextBox.Text, 
-                DateBeginDatePicker.SelectedDate.Value, 
+            try
+            {
+                championship = new ChampionshipModel(NameTextBox.Text,
+                DateBeginDatePicker.SelectedDate.Value,
                 DateEndDatePicker.SelectedDate.Value);
+            } catch
+            {
+                MessageBox.Show("Falta informações");
+                return;
+            }
 
             MainGrid.Children.Clear();
 

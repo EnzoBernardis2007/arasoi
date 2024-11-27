@@ -31,24 +31,73 @@ namespace WpfArasoi.Model
             }
         }
 
-        public static ObservableCollection<ChampionshipModel> GetChampionshipList()
+        public static ObservableCollection<ChampionshipModel> GetChampionshipInfoList()
         {
             ObservableCollection<ChampionshipModel> championshipModels = new ObservableCollection<ChampionshipModel>();
 
             using (MySqlConnection connection = ConnectionFactory.GetConnection())
             {
-                string query = "SELECT name FROM championship";
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader reader = command.ExecuteReader();
+                string query = @"
+                    SELECT 
+                        c.name AS championship_name,
+                        c.begin AS championship_begin,
+                        c.end AS championship_end,
+                        c.author AS championship_author,
+                        COUNT(i.id) AS inscription_count
+                    FROM 
+                        championship c
+                    LEFT JOIN 
+                        inscription i
+                    ON 
+                        c.id = i.championship_id
+                    GROUP BY 
+                        c.id, c.name, c.begin, c.end, c.author;
+                    ";
 
-                while (reader.Read())
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    championshipModels.Add(new ChampionshipModel(reader["name"].ToString()));
+                    while (reader.Read())
+                    {
+                        // Cria um objeto ChampionshipModel com os dados retornados
+                        championshipModels.Add(new ChampionshipModel
+                        {
+                            Name = reader["championship_name"].ToString(),
+                            DateBegin = Convert.ToDateTime(reader["championship_begin"]),
+                            DateEnd = Convert.ToDateTime(reader["championship_end"]),
+                            Author = reader["championship_author"].ToString(),
+                            InscriptionCount = Convert.ToInt32(reader["inscription_count"])
+                        });
+                    }
                 }
             }
 
             return championshipModels;
         }
+
+        private static string[] GetChampionshipsId()
+        {
+            List<string> list = new List<string>();
+
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                connection.Open(); // Abre a conexão
+
+                string query = "SELECT id FROM championship";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader["id"].ToString());
+                    }
+                }
+            }
+
+            return list.ToArray();
+        }
+
     }
 }

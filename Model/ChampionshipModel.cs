@@ -13,6 +13,10 @@ namespace WpfArasoi.Model
         public string Description { get; set; }
         public DateTime DateBegin { get; set; }
         public DateTime DateEnd { get; set; }
+        public string Author { get; set; }
+        public int InscriptionCount { get; set; }
+
+        public ChampionshipModel() { }
 
         public ChampionshipModel(string name) 
         {
@@ -24,16 +28,6 @@ namespace WpfArasoi.Model
             Name = name;
             DateBegin = dateBegin;
             DateEnd = dateEnd;
-        }
-
-        public string[] ListValues()
-        {
-            string[] values = new string[5];
-            values[0] = Name;
-            values[1] = Description;
-            values[2] = DateBegin.ToString("yyyy-MM-dd");
-            values[3] = DateEnd.ToString("yyyy-MM-dd");
-            return values;
         }
     }
 }
