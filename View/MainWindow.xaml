@@ -8,11 +8,37 @@
         Title="Arasoi" Height="1080" Width="1920" WindowState="Maximized">
     <Grid>
         <TabControl>
+            <!-- Tab to manage championships -->
             <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Toolbar -->
+                    <ToolBarTray Grid.Row="0">
+                        <ToolBar>
+                            <Button Click="AddChampionshipViewClick" Content="Adicionar campeonato"/>
+                        </ToolBar>
+                    </ToolBarTray>
+                    
+                    <!-- List of championships -->
+                    <ListBox Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label Content="Nome"/>
+                                    <Label Content="Inicio/Fim"/>
+                                    <Button Content="Habilitar solicitações"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </TabItem>
             
-            <!-- Tab to register new managers -->
+            <!-- Tab to manage new managers -->
             <TabItem x:Name="UsersTab" Header="Usuários">
                 <Grid>
                     <Grid.RowDefinitions>

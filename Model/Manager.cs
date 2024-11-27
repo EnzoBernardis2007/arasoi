@@ -61,14 +61,14 @@ namespace WpfArasoi.Model
         }
 
         // Gets the privileges from a user
-        public static string GetPrivilegeTypeFromEmail(string email) 
+        public static string GetPrivilegeTypeFromId() 
         {
             using (MySqlConnection connection = ConnectionFactory.GetConnection())
             {
-                string query = "SELECT privileges_name FROM manager WHERE email = @email";
+                string query = "SELECT privileges_name FROM manager WHERE id = @id";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@id", ActualUser.Id);
                 MySqlDataReader reader = command.ExecuteReader();
                 reader.Read();
 

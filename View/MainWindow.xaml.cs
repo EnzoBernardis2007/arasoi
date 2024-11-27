@@ -26,7 +26,7 @@ namespace WpfArasoi.View
     {
         MainWindowViewModel viewModel;
 
-        public MainWindow(string email)
+        public MainWindow()
         {
             InitializeComponent();
 
@@ -35,7 +35,7 @@ namespace WpfArasoi.View
 
             viewModel.LoadManagersList();
 
-            if (!viewModel.VisibleTabs(email))
+            if (!viewModel.VisibleTabs())
             {
                 UsersTab.Visibility = Visibility.Collapsed;
             }
@@ -79,6 +79,11 @@ namespace WpfArasoi.View
             {
                 MessageBox.Show("Erro ao criar usuário");
             }
+        }
+
+        private void AddChampionshipViewClick(object sender, RoutedEventArgs e)
+        {
+            WindowManager.ShowOrFocusWindow<AddChampionshipView>();
         }
     }
 }

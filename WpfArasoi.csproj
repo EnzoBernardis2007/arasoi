@@ -112,7 +112,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database\ConnectionFactory.cs" />
+    <Compile Include="Model\ActualUser.cs" />
     <Compile Include="Model\ArasoiExceptions.cs" />
+    <Compile Include="Model\Championship.cs" />
+    <Compile Include="Model\ChampionshipModel.cs" />
     <Compile Include="Model\Email.cs" />
     <Compile Include="Model\Manager.cs" />
     <Compile Include="Model\ManagerModel.cs" />
@@ -120,7 +123,12 @@
     <Compile Include="Model\Privileges.cs" />
     <Compile Include="Model\RelayCommand.cs" />
     <Compile Include="Model\StringFormatter.cs" />
+    <Compile Include="ViewModel\AddChampionshipViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\WindowManager.cs" />
+    <Compile Include="View\AddChampionshipView.xaml.cs">
+      <DependentUpon>AddChampionshipView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -157,6 +165,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="View\AddChampionshipView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
