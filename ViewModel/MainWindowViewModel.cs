@@ -16,11 +16,22 @@ namespace WpfArasoi.ViewModel
 {
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
-
         // Manager visible tabs
         public bool VisibleTabs()
         {
             return Manager.GetPrivilegeTypeFromId() == "admin";
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void LoadAll()
+        {
+            LoadManagersList();
+            LoadChampionshipsList();
         }
 
         /* ------------------------
@@ -42,13 +53,7 @@ namespace WpfArasoi.ViewModel
 
         public void LoadManagersList()
         {
-            Managers = Manager.GetManangersList(this);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Managers = Manager.GetManangersList();
         }
 
         public ComboBoxItem[] CreatePrivilegesComboBox()
@@ -86,5 +91,32 @@ namespace WpfArasoi.ViewModel
         /* ------------------------
          * |    MANAGERS TAB ↑    |
          * ------------------------ */
+
+        /* -----------------------------
+         * |    CHAMPIONSHIPS TAB ↓    |
+         * ----------------------------- */
+
+        private ObservableCollection<ChampionshipModel> _championships;
+        public ObservableCollection<ChampionshipModel> Championships
+        {
+            get => _championships;
+            set
+            {
+                if (_championships != value)
+                {
+                    _championships = value;
+                    OnPropertyChanged(nameof(Championships));
+                }
+            }
+        }
+
+        public void LoadChampionshipsList()
+        {
+            Championships = Championship.GetChampionshipList();
+        }
+
+        /* -----------------------------
+         * |    CHAMPIONSHIPS TAB ↑    |
+         * ----------------------------- */
     }
 }

@@ -8,6 +8,9 @@ using System.Windows;
 using WpfArasoi.View;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using WpfArasoi.Model;
 
 namespace WpfArasoi.ViewModel
 {

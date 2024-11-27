@@ -40,7 +40,7 @@ namespace WpfArasoi.Model
         }
 
         // Get a list of ManagerModel objects 
-        public static ObservableCollection<ManagerModel> GetManangersList(MainWindowViewModel viewModel)
+        public static ObservableCollection<ManagerModel> GetManangersList()
         {
             ObservableCollection<ManagerModel> managerModels = new ObservableCollection<ManagerModel>();
 
@@ -53,7 +53,7 @@ namespace WpfArasoi.Model
 
                 while (reader.Read())
                 {
-                    managerModels.Add(new ManagerModel(reader["email"].ToString(), viewModel));
+                    managerModels.Add(new ManagerModel(reader["email"].ToString()));
                 }
             }
 

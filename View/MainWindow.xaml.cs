@@ -33,7 +33,7 @@ namespace WpfArasoi.View
             viewModel = new MainWindowViewModel();
             this.DataContext = viewModel;
 
-            viewModel.LoadManagersList();
+            viewModel.LoadAll();
 
             if (!viewModel.VisibleTabs())
             {

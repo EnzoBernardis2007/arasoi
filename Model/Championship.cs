@@ -1,11 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfArasoi.Database;
+using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.Model
 {
@@ -27,6 +29,26 @@ namespace WpfArasoi.Model
 
                 command.ExecuteNonQuery();
             }
+        }
+
+        public static ObservableCollection<ChampionshipModel> GetChampionshipList()
+        {
+            ObservableCollection<ChampionshipModel> championshipModels = new ObservableCollection<ChampionshipModel>();
+
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "SELECT name FROM championship";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    championshipModels.Add(new ChampionshipModel(reader["name"].ToString()));
+                }
+            }
+
+            return championshipModels;
         }
     }
 }

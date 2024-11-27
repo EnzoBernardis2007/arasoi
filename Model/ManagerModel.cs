@@ -13,17 +13,15 @@ using WpfArasoi.ViewModel;
 namespace WpfArasoi.Model
 {
     // This class is used in the list of users in tab of users
-    internal class ManagerModel
+    internal class ManagerModel : Model
     {
         public string Email { get; set; }
         public ICommand Delete { get; set; }
-        private MainWindowViewModel viewModel { get; set; }
 
-        public ManagerModel(string email, MainWindowViewModel viewModel)
+        public ManagerModel(string email)
         {
             Email = email;
             Delete = new RelayCommand(DeleteMyself);
-            this.viewModel = viewModel;
         }
 
         public void DeleteMyself()
@@ -34,7 +32,7 @@ namespace WpfArasoi.Model
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@email", Email);
                 command.ExecuteNonQuery();
-                viewModel.LoadManagersList();
+                ViewModel.LoadManagersList();
             }
         }
     }
