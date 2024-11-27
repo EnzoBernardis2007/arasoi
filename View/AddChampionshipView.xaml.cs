@@ -73,9 +73,11 @@ namespace WpfArasoi.View
             TextBox descriptionTextBox = WindowManager.GetUIElementWithName<TextBox>(MainGrid, "DescriptionTextBox");
             championship.Description = descriptionTextBox.Text;
 
-            Championship.CreateChampionship(championship);
+            viewModel.ResponseToCreateChampionship(championship);
 
             MessageBox.Show("Campeonato criado!");
+
+            
         }
     }
 }

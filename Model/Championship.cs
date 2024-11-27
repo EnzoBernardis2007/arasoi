@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfArasoi.Database;
+using WpfArasoi.Prefab;
 using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.Model
@@ -31,7 +32,7 @@ namespace WpfArasoi.Model
             }
         }
 
-        public static ObservableCollection<ChampionshipModel> GetChampionshipInfoList()
+        public static ObservableCollection<ChampionshipModel> GetChampionshipInfoList(MainWindowViewModel viewModel)
         {
             ObservableCollection<ChampionshipModel> championshipModels = new ObservableCollection<ChampionshipModel>();
 
@@ -40,6 +41,7 @@ namespace WpfArasoi.Model
 
                 string query = @"
                     SELECT 
+                        c.id AS championship_id,
                         c.name AS championship_name,
                         c.begin AS championship_begin,
                         c.end AS championship_end,
@@ -63,40 +65,19 @@ namespace WpfArasoi.Model
                         // Cria um objeto ChampionshipModel com os dados retornados
                         championshipModels.Add(new ChampionshipModel
                         {
+                            Id = reader["championship_id"].ToString(),
                             Name = reader["championship_name"].ToString(),
                             DateBegin = Convert.ToDateTime(reader["championship_begin"]),
                             DateEnd = Convert.ToDateTime(reader["championship_end"]),
                             Author = reader["championship_author"].ToString(),
-                            InscriptionCount = Convert.ToInt32(reader["inscription_count"])
+                            InscriptionCount = Convert.ToInt32(reader["inscription_count"]),
+                            ViewModel = viewModel
                         });
                     }
                 }
             }
 
             return championshipModels;
-        }
-
-        private static string[] GetChampionshipsId()
-        {
-            List<string> list = new List<string>();
-
-            using (MySqlConnection connection = ConnectionFactory.GetConnection())
-            {
-                connection.Open(); // Abre a conexão
-
-                string query = "SELECT id FROM championship";
-
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                using (MySqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(reader["id"].ToString());
-                    }
-                }
-            }
-
-            return list.ToArray();
         }
 
     }

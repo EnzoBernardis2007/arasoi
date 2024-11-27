@@ -53,7 +53,7 @@ namespace WpfArasoi.ViewModel
 
         public void LoadManagersList()
         {
-            Managers = Manager.GetManangersList();
+            Managers = Manager.GetManangersList(this);
         }
 
         public ComboBoxItem[] CreatePrivilegesComboBox()
@@ -113,7 +113,8 @@ namespace WpfArasoi.ViewModel
 
         public void LoadChampionshipsList()
         {
-            Championships = Championship.GetChampionshipInfoList();
+            Championships = Championship.GetChampionshipInfoList(this);
+            AddChampionshipViewModel.SetMainWindowViewModel(this);
         }
 
         /* -----------------------------

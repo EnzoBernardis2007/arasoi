@@ -16,6 +16,8 @@ namespace WpfArasoi.ViewModel
 {
     internal class AddChampionshipViewModel
     {
+        static MainWindowViewModel MainWindowViewModel { get; set; }
+
         public TextBox CreateDescriptionTextBox()
         {
             return new TextBox
@@ -35,6 +37,17 @@ namespace WpfArasoi.ViewModel
                 VerticalAlignment = VerticalAlignment.Stretch,
                 HorizontalAlignment = HorizontalAlignment.Stretch
             };
+        }
+
+        public static void SetMainWindowViewModel(MainWindowViewModel mainWindowViewModel)
+        {
+            MainWindowViewModel = mainWindowViewModel;
+        }
+
+        public void ResponseToCreateChampionship(ChampionshipModel championship)
+        {
+            Championship.CreateChampionship(championship);
+            MainWindowViewModel.LoadChampionshipsList();
         }
     }
 }

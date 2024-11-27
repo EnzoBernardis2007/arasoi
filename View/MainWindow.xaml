@@ -32,6 +32,7 @@
                                     <Label Content="{Binding DateBegin}"/>
                                     <Label Content="{Binding DateEnd}"/>
                                     <Label Content="{Binding InscriptionCount}"/>
+                                    <Button Content="Deletar" Command="{Binding Delete}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

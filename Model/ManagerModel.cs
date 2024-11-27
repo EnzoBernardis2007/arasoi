@@ -13,14 +13,14 @@ using WpfArasoi.ViewModel;
 namespace WpfArasoi.Model
 {
     // This class is used in the list of users in tab of users
-    internal class ManagerModel : Model
+    internal class ManagerModel
     {
         public string Email { get; set; }
         public ICommand Delete { get; set; }
+        public MainWindowViewModel ViewModel { get; set; }
 
-        public ManagerModel(string email)
+        public ManagerModel()
         {
-            Email = email;
             Delete = new RelayCommand(DeleteMyself);
         }
 
