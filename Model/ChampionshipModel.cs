@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfArasoi.Database;
 using WpfArasoi.Prefab;
@@ -21,11 +22,15 @@ namespace WpfArasoi.Model
         public string Author { get; set; }
         public int InscriptionCount { get; set; }
         public ICommand Delete { get; set; }
+        public ICommand OpenInscriptions { get; set; }
+        public ICommand CloseInscriptions { get; set; }
         public MainWindowViewModel ViewModel { get; set; }
 
         public ChampionshipModel() 
         {
             Delete = new RelayCommand(DeleteMyself);
+            OpenInscriptions = new RelayCommand(OpenMyInscriptions);
+            CloseInscriptions = new RelayCommand(CloseMyInscriptions);
         }
 
         public ChampionshipModel(string name) 
@@ -49,6 +54,31 @@ namespace WpfArasoi.Model
                 command.Parameters.AddWithValue("@id", Id);
                 command.ExecuteNonQuery();
                 ViewModel.LoadChampionshipsList();
+            }
+        }
+
+        public void OpenMyInscriptions()
+        {
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "UPDATE championship SET accepting_athletes = true WHERE id = @id;";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", Id);
+                command.ExecuteNonQuery();
+                ViewModel.LoadChampionshipsList();
+                MessageBox.Show("abriu");
+            }
+        }
+        public void CloseMyInscriptions()
+        {
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "UPDATE championship SET accepting_athletes = false WHERE id = @id;";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", Id);
+                command.ExecuteNonQuery();
+                ViewModel.LoadChampionshipsList();
+                MessageBox.Show("fechou");
             }
         }
     }

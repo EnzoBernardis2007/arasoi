@@ -33,6 +33,8 @@
                                     <Label Content="{Binding DateEnd}"/>
                                     <Label Content="{Binding InscriptionCount}"/>
                                     <Button Content="Deletar" Command="{Binding Delete}"/>
+                                    <Button Content="Abrir inscrições" Command="{Binding OpenInscriptions}"/>
+                                    <Button Content="Fechar inscrições" Command="{Binding CloseInscriptions}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
