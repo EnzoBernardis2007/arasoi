@@ -14,6 +14,9 @@ namespace WpfArasoi.Model
 {
     internal static class Championship
     {
+        public static MainWindowViewModel mainWindowViewModel;
+        public static void SetMainWindowViewModel(MainWindowViewModel main) { mainWindowViewModel =  main; }
+
         public static void CreateChampionship(ChampionshipModel championship)
         {
             using (MySqlConnection connection = ConnectionFactory.GetConnection())
@@ -80,5 +83,56 @@ namespace WpfArasoi.Model
             return championshipModels;
         }
 
+        public static ChampionshipModel GetChampionship(string id)
+        {
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "SELECT * FROM championship WHERE id = @id";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", id);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return new ChampionshipModel
+                    {
+                        Id = reader["id"].ToString(),
+                        Name = reader["name"].ToString(),
+                        Description = reader["description"]?.ToString(),
+                        DateBegin = DateTime.Parse(reader["begin"].ToString()),
+                        DateEnd = DateTime.Parse(reader["end"].ToString()),
+                        Author = reader["author"].ToString()
+                    };
+                }
+
+                return null;
+            }
+        }
+
+        public static void UpdateChampionship(ChampionshipModel championship)
+        {
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = @"
+                    UPDATE championship
+                    SET 
+                        name = @name, 
+                        begin = @begin, 
+                        end = @end, 
+                        description = @description
+                    WHERE 
+                        id = @id;
+                ";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", championship.Id);
+                command.Parameters.AddWithValue("@name", championship.Name);
+                command.Parameters.AddWithValue("@description", championship.Description);
+                command.Parameters.AddWithValue("@begin", championship.DateBegin);
+                command.Parameters.AddWithValue("@end", championship.DateEnd);
+                command.ExecuteNonQuery();
+                mainWindowViewModel.LoadChampionshipsList();
+            }
+        }
     }
 }

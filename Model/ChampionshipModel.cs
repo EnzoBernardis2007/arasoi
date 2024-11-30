@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfArasoi.Database;
 using WpfArasoi.Prefab;
+using WpfArasoi.View;
 using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.Model
@@ -24,6 +25,7 @@ namespace WpfArasoi.Model
         public ICommand Delete { get; set; }
         public ICommand OpenInscriptions { get; set; }
         public ICommand CloseInscriptions { get; set; }
+        public ICommand ManageCategorys { get; set; }
         public MainWindowViewModel ViewModel { get; set; }
 
         public ChampionshipModel() 
@@ -31,6 +33,7 @@ namespace WpfArasoi.Model
             Delete = new RelayCommand(DeleteMyself);
             OpenInscriptions = new RelayCommand(OpenMyInscriptions);
             CloseInscriptions = new RelayCommand(CloseMyInscriptions);
+            ManageCategorys = new RelayCommand(OpenChampionshipsView);
         }
 
         public ChampionshipModel(string name) 
@@ -66,7 +69,6 @@ namespace WpfArasoi.Model
                 command.Parameters.AddWithValue("@id", Id);
                 command.ExecuteNonQuery();
                 ViewModel.LoadChampionshipsList();
-                MessageBox.Show("abriu");
             }
         }
         public void CloseMyInscriptions()
@@ -78,8 +80,13 @@ namespace WpfArasoi.Model
                 command.Parameters.AddWithValue("@id", Id);
                 command.ExecuteNonQuery();
                 ViewModel.LoadChampionshipsList();
-                MessageBox.Show("fechou");
             }
+        }
+
+        public void OpenChampionshipsView()
+        {
+            ChampionshipView championshipView = new ChampionshipView(Id);
+            championshipView.Show();
         }
     }
 }

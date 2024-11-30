@@ -1,0 +1,49 @@
+﻿<Window x:Class="WpfArasoi.View.ChampionshipView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfArasoi.View"
+        mc:Ignorable="d"
+        Title="ChampionshipView" Height="1080" Width="1920" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <!-- Name of championship field -->
+            <Label Content="Nome:"/>
+            <TextBox x:Name="NameTextBox"/>
+
+            <!-- Date of begin field -->
+            <Label Content="Data de inicio"/>
+            <DatePicker x:Name="DateBeginDatePicker"/>
+
+            <!-- Date of end field -->
+            <Label Content="Data de fim"/>
+            <DatePicker x:Name="DateEndDatePicker"/>
+            
+            <!-- Text field -->
+            <Label Content="Informações adicionais"/>
+            <TextBox x:Name="DescriptionTextBox" TextWrapping="Wrap"/>
+            
+            <!-- Update -->
+            <Button Click="UpdateChampionshipClick" Content="Atualizar"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Content="Adicionar categoria"/>
+        </StackPanel>
+    </Grid>
+</Window>

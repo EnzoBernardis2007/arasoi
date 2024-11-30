@@ -19,9 +19,6 @@ using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.View
 {
-    /// <summary>
-    /// Lógica interna para MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         MainWindowViewModel viewModel;
@@ -32,6 +29,7 @@ namespace WpfArasoi.View
 
             viewModel = new MainWindowViewModel();
             this.DataContext = viewModel;
+            Championship.SetMainWindowViewModel(viewModel);
 
             viewModel.LoadAll();
 

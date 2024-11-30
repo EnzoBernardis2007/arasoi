@@ -35,6 +35,7 @@
                                     <Button Content="Deletar" Command="{Binding Delete}"/>
                                     <Button Content="Abrir inscrições" Command="{Binding OpenInscriptions}"/>
                                     <Button Content="Fechar inscrições" Command="{Binding CloseInscriptions}"/>
+                                    <Button Content="Categorias" Command="{Binding ManageCategorys}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

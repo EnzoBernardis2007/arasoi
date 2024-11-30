@@ -124,10 +124,14 @@
     <Compile Include="Model\RelayCommand.cs" />
     <Compile Include="Model\StringFormatter.cs" />
     <Compile Include="ViewModel\AddChampionshipViewModel.cs" />
+    <Compile Include="ViewModel\ChampionshipViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\WindowManager.cs" />
     <Compile Include="View\AddChampionshipView.xaml.cs">
       <DependentUpon>AddChampionshipView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChampionshipView.xaml.cs">
+      <DependentUpon>ChampionshipView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -166,6 +170,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="View\AddChampionshipView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChampionshipView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

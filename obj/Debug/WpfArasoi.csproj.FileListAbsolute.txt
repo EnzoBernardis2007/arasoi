@@ -50,3 +50,5 @@ C:\Users\berna\OneDrive\Área de Trabalho\Programas\arasoi\WpfArasoi\obj\Debug\V
 C:\Users\berna\OneDrive\Área de Trabalho\Programas\arasoi\WpfArasoi\obj\Debug\View\MainWindow.baml
 C:\Users\berna\OneDrive\Área de Trabalho\Programas\arasoi\WpfArasoi\obj\Debug\View\AddChampionshipView.g.cs
 C:\Users\berna\OneDrive\Área de Trabalho\Programas\arasoi\WpfArasoi\obj\Debug\View\AddChampionshipView.baml
+C:\Users\berna\OneDrive\Área de Trabalho\Programas\arasoi\WpfArasoi\obj\Debug\View\ChampionshipView.g.cs
+C:\Users\berna\OneDrive\Área de Trabalho\Programas\arasoi\WpfArasoi\obj\Debug\View\ChampionshipView.baml
