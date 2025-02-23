@@ -39,5 +39,10 @@ namespace WpfArasoi.View
 
             Championship.UpdateChampionship(championship);
         }
+
+        private void CreateBracketsClick(object sender, RoutedEventArgs e)
+        {
+            Championship.CreateBrackets(championship.Id);
+        }
     }
 }

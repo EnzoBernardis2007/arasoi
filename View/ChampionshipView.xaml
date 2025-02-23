@@ -24,26 +24,17 @@
             <!-- Date of end field -->
             <Label Content="Data de fim"/>
             <DatePicker x:Name="DateEndDatePicker"/>
-            
+
             <!-- Text field -->
             <Label Content="Informações adicionais"/>
             <TextBox x:Name="DescriptionTextBox" TextWrapping="Wrap"/>
-            
+
             <!-- Update -->
             <Button Click="UpdateChampionshipClick" Content="Atualizar"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <ListBox>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <Button Content="Adicionar categoria"/>
+            <Button Click="CreateBracketsClick" Content="Gerar chaves" />
         </StackPanel>
     </Grid>
 </Window>

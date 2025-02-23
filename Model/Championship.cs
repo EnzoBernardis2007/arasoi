@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using WpfArasoi.Database;
-using WpfArasoi.Prefab;
 using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.Model
@@ -15,7 +14,7 @@ namespace WpfArasoi.Model
     internal static class Championship
     {
         public static MainWindowViewModel mainWindowViewModel;
-        public static void SetMainWindowViewModel(MainWindowViewModel main) { mainWindowViewModel =  main; }
+        public static void SetMainWindowViewModel(MainWindowViewModel main) { mainWindowViewModel = main; }
 
         public static void CreateChampionship(ChampionshipModel championship)
         {
@@ -109,6 +108,29 @@ namespace WpfArasoi.Model
             }
         }
 
+        public static ChampionshipModel[] GetChampionships()
+        {
+            using (MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                List<ChampionshipModel> championships = new List<ChampionshipModel>();
+
+                string query = "SELECT id, name FROM championship";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    championships.Add(new ChampionshipModel
+                    {
+                        Id = reader["id"].ToString(),
+                        Name = reader["name"].ToString()
+                    });
+                }
+
+                return championships.ToArray();
+            }
+        }
+
         public static void UpdateChampionship(ChampionshipModel championship)
         {
             using (MySqlConnection connection = ConnectionFactory.GetConnection())
@@ -134,5 +156,155 @@ namespace WpfArasoi.Model
                 mainWindowViewModel.LoadChampionshipsList();
             }
         }
+
+        public static void CreateBrackets(string championshipId)
+        {
+            List<AthleteModel> athletes = Athlete.GetInscribedAthletes(championshipId);
+            List<CategoryModel> categories = new List<CategoryModel>();
+            
+            using(MySqlConnection connection = ConnectionFactory.GetConnection())
+            {
+                string query = "SELECT * FROM kumiteCategories";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    categories.Add(new CategoryModel()
+                    {
+                        Id = reader.GetInt32("id"),
+                        CategoryName = reader.GetString("category_name"),
+                        AgeGroup = reader.GetString("age_group"),
+                        Sex = reader.GetString("sex"),
+                        MinWeight = reader.IsDBNull(reader.GetOrdinal("min_weight")) ? 0 : reader.GetDecimal("min_weight"),
+                        MaxWeight = reader.IsDBNull(reader.GetOrdinal("max_weight")) ? 1000 : reader.GetDecimal("max_weight"),
+                        MinBirthYear = reader.GetDateTime("min_birth_year"),
+                        MaxBirthYear = reader.GetDateTime("max_birth_year")
+                    });
+                }
+            }
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                Debug.WriteLine(categories[i].ToString());
+
+                for (int j = athletes.Count - 1; j >= 0; j--)
+                {
+                    if (athletes[j].Sex != categories[i].Sex) continue;
+
+                    bool isEarlier = athletes[j].Birthday <= categories[i].MaxBirthYear;
+                    bool isLater = athletes[j].Birthday >= categories[i].MinBirthYear;
+
+                    if (isEarlier && isLater &&
+                        athletes[j].Weight <= categories[i].MaxWeight &&
+                        athletes[j].Weight >= categories[i].MinWeight)
+                    {
+                        Debug.WriteLine(athletes[j].FullLegalName);
+                        Debug.WriteLine(athletes[j].Birthday.ToString());
+                        athletes.RemoveAt(j);
+                    }
+                }
+            }
+
+
+            /*
+            List<BracketModel> OrderAthletesByWeight(List<AthleteModel> givenAthletes)
+            {
+                double lengthPercentage = 0;
+                List<BracketModel> brackets = new List<BracketModel>();
+
+                // Enquanto houver 2 ou mais atletas, tentar formar brackets
+                while (givenAthletes.Count > 1)
+                {
+                    bool createdBracket = false;
+
+                    for (int i = 0; i < givenAthletes.Count - 1; i++)
+                    {
+                        for (int j = i + 1; j < givenAthletes.Count; j++)
+                        {
+                            // Não permitir que o mesmo atleta lute contra si mesmo
+                            if (givenAthletes[i].Cpf == givenAthletes[j].Cpf)
+                            {
+                                continue;
+                            }
+
+                            // Verifica se a diferença de altura e peso está dentro da margem
+                            bool heightMatch = Math.Abs(givenAthletes[i].Height - givenAthletes[j].Height) <= (lengthPercentage * givenAthletes[i].Height);
+                            bool weightMatch = Math.Abs(givenAthletes[i].Weight - givenAthletes[j].Weight) <= (lengthPercentage * givenAthletes[i].Weight);
+
+                            //Debug.WriteLine($"Atleta {i} vs Atleta {j}: HeightDiff = {Math.Abs(givenAthletes[i].Height - givenAthletes[j].Height)}, WeightDiff = {Math.Abs(givenAthletes[i].Weight - givenAthletes[j].Weight)}, lengthPercentage = {lengthPercentage}");
+
+                            if (weightMatch)
+                            {
+                                // Criação do bracket
+                                brackets.Add(new BracketModel
+                                {
+                                    CategoryId = givenAthletes[i].CategoryId,
+                                    CpfAKA = givenAthletes[i].Cpf,
+                                    CpfAO = givenAthletes[j].Cpf
+                                });
+
+                                // Remoção dos atletas - iniciar pelo índice maior para evitar problemas de deslocamento
+                                givenAthletes.RemoveAt(j);
+                                givenAthletes.RemoveAt(i);
+
+                                createdBracket = true;
+                                lengthPercentage = 0; // Resetar a margem
+                                break; // Sair do loop interno após formar um bracket
+                            }
+                        }
+
+                        if (createdBracket)
+                        {
+                            break; // Sair do loop externo para reiniciar a busca com a lista atualizada
+                        }
+                    }
+
+                    // Se nenhum bracket foi formado, aumentar a margem de diferença
+                    if (!createdBracket)
+                    {
+                        lengthPercentage += 0.01;
+                    }
+                }
+
+                return brackets;
+            }
+
+            foreach (var category in categories)
+            {
+                List<AthleteModel> filteredAthletes = athletes.Where(a => a.CategoryId == category.Id).ToList();
+
+                List<BracketModel> brackets = OrderAthletesByWeight(filteredAthletes);
+
+                ToDatabase(brackets);
+
+            }
+
+            void ToDatabase(List<BracketModel> brackets)
+            {
+                foreach (var item in brackets)
+                {
+                    using(MySqlConnection connection = ConnectionFactory.GetConnection())
+                    {
+                        string query = "INSERT INTO brackets (category_id, cpf_AKA, cpf_AO, score_AKA, score_AO, foul_AKA, foul_AO) " +
+                            "VALUES (@category_id, @cpf_AKA, @cpf_AO, @score_AKA, @score_AO, @foul_AKA, @foul_AO)";
+
+                        MySqlCommand command = new MySqlCommand(query, connection); 
+                        command.Parameters.AddWithValue("@category_id", item.CategoryId);
+                        command.Parameters.AddWithValue("@cpf_AKA", item.CpfAKA);
+                        command.Parameters.AddWithValue("@cpf_AO", item.CpfAO);
+                        command.Parameters.AddWithValue("@score_AKA", item.ScoreAka);
+                        command.Parameters.AddWithValue("@score_AO", item.ScoreAo);
+                        command.Parameters.AddWithValue("@foul_AKA", item.FoulAka);
+                        command.Parameters.AddWithValue("@foul_AO", item.FoulAo);
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("mandeu");
+                    }
+                }
+            }
+            */
+        }
+
     }
 }
