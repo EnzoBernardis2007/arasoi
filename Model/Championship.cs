@@ -185,10 +185,10 @@ namespace WpfArasoi.Model
                 }
             }
 
+            List<AthleteModel> anotherList = new List<AthleteModel>();
+
             for (int i = 0; i < categories.Count; i++)
             {
-                Debug.WriteLine(categories[i].ToString());
-
                 for (int j = athletes.Count - 1; j >= 0; j--)
                 {
                     if (athletes[j].Sex != categories[i].Sex) continue;
@@ -200,15 +200,13 @@ namespace WpfArasoi.Model
                         athletes[j].Weight <= categories[i].MaxWeight &&
                         athletes[j].Weight >= categories[i].MinWeight)
                     {
-                        Debug.WriteLine(athletes[j].FullLegalName);
-                        Debug.WriteLine(athletes[j].Birthday.ToString());
+                        athletes[j].CategoryId = categories[i].Id;
+                        anotherList.Add(athletes[j]);
                         athletes.RemoveAt(j);
                     }
                 }
             }
 
-
-            /*
             List<BracketModel> OrderAthletesByWeight(List<AthleteModel> givenAthletes)
             {
                 double lengthPercentage = 0;
@@ -271,15 +269,9 @@ namespace WpfArasoi.Model
                 return brackets;
             }
 
-            foreach (var category in categories)
-            {
-                List<AthleteModel> filteredAthletes = athletes.Where(a => a.CategoryId == category.Id).ToList();
+            List<BracketModel> list = OrderAthletesByWeight(anotherList);
 
-                List<BracketModel> brackets = OrderAthletesByWeight(filteredAthletes);
-
-                ToDatabase(brackets);
-
-            }
+            ToDatabase(list);
 
             void ToDatabase(List<BracketModel> brackets)
             {
@@ -299,11 +291,11 @@ namespace WpfArasoi.Model
                         command.Parameters.AddWithValue("@foul_AKA", item.FoulAka);
                         command.Parameters.AddWithValue("@foul_AO", item.FoulAo);
                         command.ExecuteNonQuery();
-                        MessageBox.Show("mandeu");
                     }
                 }
+                MessageBox.Show("mandeu");
             }
-            */
+            
         }
 
     }

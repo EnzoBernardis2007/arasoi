@@ -37,8 +37,7 @@ namespace WpfArasoi.Model
 
         public override string ToString()
         {
-            string msg = $"{FullLegalName}: Peso '{Weight}', altura '{Height}'";
-            return msg;
+            return $"{FullLegalName}: Peso '{Weight}', altura '{Height}', idade '{Birthday.ToString()}''";
         }
         public override bool Equals(object obj)
         {

@@ -16,5 +16,10 @@ namespace WpfArasoi.Model
         public int ScoreAo { get; set; }
         public int FoulAka { get; set; }
         public int FoulAo { get; set; }
+
+        public override string ToString()
+        {
+            return $"AKA: {CpfAKA}, AO: {CpfAO}";
+        }
     }
 }
