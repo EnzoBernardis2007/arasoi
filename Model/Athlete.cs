@@ -26,10 +26,11 @@ namespace WpfArasoi.Model
                 {
                     athletes.Add(new AthleteModel
                     {
+                        Id = reader.GetGuid("id").ToString(),
                         Email = reader.GetString("email"),
                         PasswordHash = reader.GetString("password_hash"),
                         Salt = reader.GetString("salt"),
-                        Cpf = reader.GetString("cpf"),
+                        Cpf = reader.GetString("encrypted_cpf"),
                         FullLegalName = reader.GetString("full_legal_name"),
                         PreferedName = reader.IsDBNull(reader.GetOrdinal("prefered_name")) ? null : reader.GetString("prefered_name"),
                         GenderName = reader.GetString("gender_name"),

@@ -9,6 +9,7 @@ namespace WpfArasoi.Model
 {
     internal class AthleteModel
     {
+        public string Id { get; set; }
         public int CategoryId { get; set; }
         // App Info
         public string Email { get; set; }

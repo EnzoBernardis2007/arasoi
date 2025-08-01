@@ -117,7 +117,6 @@
     <Compile Include="Model\Athlete.cs" />
     <Compile Include="Model\AthleteModel.cs" />
     <Compile Include="Model\BracketModel.cs" />
-    <Compile Include="Model\Category.cs" />
     <Compile Include="Model\CategoryModel.cs" />
     <Compile Include="Model\Championship.cs" />
     <Compile Include="Model\ChampionshipModel.cs" />
