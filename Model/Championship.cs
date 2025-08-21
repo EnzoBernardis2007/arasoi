@@ -306,12 +306,27 @@ namespace WpfArasoi.Model
                     }
                 }
 
-                MessageBox.Show("Chaves inseridas no banco com sucesso!");
+                MessageBox.Show("Chaves inseridas com sucesso!");
             }
 
             List<BracketModel> list = OrderAthletesByWeight(anotherList);
             ToDatabase(list);
         }
 
+        public static void DeleteBrackets(string championshipId)
+        {
+            using(var connection = ConnectionFactory.GetConnection())
+            {
+                string query = "DELETE FROM brackets WHERE championship_id = @championship_id";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@championship_id", championshipId);
+
+                command.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Chaves excluidas com sucesso!");
+        }
     }
 }
