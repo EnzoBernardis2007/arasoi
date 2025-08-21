@@ -5,93 +5,139 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfArasoi.View"
         mc:Ignorable="d"
-        Title="Arasoi" Height="1080" Width="1920" WindowState="Maximized">
-    <Grid>
-        <TabControl>
-            <!-- Tab to manage championships -->
-            <TabItem Header="TabItem">
-                <Grid>
+        Title="Arasoi" Height="1080" Width="1920" WindowState="Maximized"
+        Background="#F5F5F5">
+
+    <Grid Margin="20">
+        <TabControl Background="White"
+                    BorderBrush="#E5E7EB" 
+                    BorderThickness="1"
+                    >
+            <!-- Tab Campeonatos -->
+            <TabItem Header="Campeonatos" FontWeight="Bold" Foreground="#1E3A8A">
+                <Grid Background="White" Margin="10" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="80"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <!-- Toolbar -->
-                    <ToolBarTray Grid.Row="0">
-                        <ToolBar>
-                            <Button Click="AddChampionshipViewClick" Content="Adicionar campeonato"/>
+                    <ToolBarTray Grid.Row="0" Background="#F9FAFB">
+                        <ToolBar Background="#F9FAFB" BorderThickness="0">
+                            <Button Click="AddChampionshipViewClick" 
+                                    Content="Adicionar campeonato"
+                                    Padding="10,5"
+                                    Background="#2563EB" 
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,10,0"
+                                    />
                         </ToolBar>
                     </ToolBarTray>
-                    
-                    <!-- List of championships -->
-                    <ListBox ItemsSource="{Binding Championships}" Grid.Row="1">
+
+                    <!-- Lista de Campeonatos -->
+                    <ListBox ItemsSource="{Binding Championships}" Grid.Row="1" 
+                             Background="White"
+                             BorderBrush="#E5E7EB"
+                             BorderThickness="1"
+                             Margin="10"
+                             >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <Label Content="{Binding Name}"/>
-                                    <Label Content="{Binding DateBegin}"/>
-                                    <Label Content="{Binding DateEnd}"/>
-                                    <Label Content="{Binding InscriptionCount}"/>
-                                    <Button Content="Deletar" Command="{Binding Delete}"/>
-                                    <Button Content="Abrir inscrições" Command="{Binding OpenInscriptions}"/>
-                                    <Button Content="Fechar inscrições" Command="{Binding CloseInscriptions}"/>
-                                    <Button Content="Categorias" Command="{Binding ManageCategorys}"/>
-                                </StackPanel>
+                                <Border BorderBrush="#E5E7EB" BorderThickness="0 0 0 1" Padding="10">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Foreground="#111827"/>
+                                        <TextBlock Text="{Binding DateBegin}" Foreground="#444"/>
+                                        <TextBlock Text="{Binding DateEnd}" Foreground="#444"/>
+                                        <TextBlock Text="Inscrições: " Foreground="#444" 
+                                                   Margin="0,2,0,5">
+                                            <Run Text="{Binding InscriptionCount}"/>
+                                        </TextBlock>
+
+                                        <!-- Botões de Ação -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                            <Button Content="Deletar" Command="{Binding Delete}"
+                                                    Background="#DC2626" Foreground="White"
+                                                    Padding="6,3" BorderThickness="0"
+                                                    Margin="0,0,8,0"/>
+                                            <Button Content="Abrir inscrições" Command="{Binding OpenInscriptions}"
+                                                    Background="#2563EB" Foreground="White"
+                                                    Padding="6,3" BorderThickness="0"
+                                                    Margin="0,0,8,0"/>
+                                            <Button Content="Fechar inscrições" Command="{Binding CloseInscriptions}"
+                                                    Background="#1E40AF" Foreground="White"
+                                                    Padding="6,3" BorderThickness="0"
+                                                    Margin="0,0,8,0"/>
+                                            <Button Content="Categorias" Command="{Binding ManageCategorys}"
+                                                    Background="#E5E7EB" Foreground="#111827"
+                                                    Padding="6,3" BorderThickness="0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </TabItem>
-            
-            <!-- Tab to manage new managers -->
-            <TabItem x:Name="UsersTab" Header="Usuários">
-                <Grid>
+
+            <!-- Tab Usuários -->
+            <TabItem x:Name="UsersTab" Header="Usuários" FontWeight="Bold" Foreground="#1E3A8A">
+                <Grid Background="White" Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    
-                    <!-- Email field -->
-                    <Label Content="Email:" Grid.Row="0" Grid.Column="0"/>
-                    <TextBox x:Name="EmailTextBox" Grid.Row="1" Grid.Column="0"/>
-                    
-                    <!-- Password fields -->
-                    <Label Content="Senha:" Grid.Row="2" Grid.Column="0"/>
-                    <PasswordBox x:Name="PasswordPBox" Grid.Row="3" Grid.Column="0"/>
 
-                    <Label Content="Confirmar senha:" Grid.Row="4"/>
-                    <PasswordBox x:Name="ConfirmPasswordBox" Grid.Row="5" Grid.Column="0"/>
-                    
-                    <!-- Privileges field -->
-                    <ComboBox x:Name="PrivilegesComboBox" Grid.Row="6" Grid.Column="0"/>
-                    
-                    <!-- Confirm -->
-                    <Button Click="SignupClick" Content="Registrar" Grid.Row="7" Grid.Column="0"/>
-                    
-                    <!-- List of managers -->
-                    <ListBox ItemsSource="{Binding Managers}" Grid.Row="0" Grid.RowSpan="8" Grid.Column="1">
+                    <!-- Formulário Novo Usuário -->
+                    <StackPanel Grid.Column="0" VerticalAlignment="Top" Margin="10">
+                        <TextBlock Text="Registrar Novo Usuário" 
+                                   FontSize="18" FontWeight="Bold" 
+                                   Foreground="#111827" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Email:"/>
+                        <TextBox x:Name="EmailTextBox" Height="30" Margin="0,5,0,10" 
+                                 BorderBrush="#CBD5E1" Background="#F9FAFB"/>
+
+                        <TextBlock Text="Senha:"/>
+                        <PasswordBox x:Name="PasswordPBox" Height="30" Margin="0,5,0,10"
+                                     BorderBrush="#CBD5E1" Background="#F9FAFB"/>
+
+                        <TextBlock Text="Confirmar senha:"/>
+                        <PasswordBox x:Name="ConfirmPasswordBox" Height="30" Margin="0,5,0,10"
+                                     BorderBrush="#CBD5E1" Background="#F9FAFB"/>
+
+                        <TextBlock Text="Privilégios:"/>
+                        <ComboBox x:Name="PrivilegesComboBox" Height="30" Margin="0,5,0,20"
+                                  BorderBrush="#CBD5E1" Background="#F9FAFB"/>
+
+                        <Button Click="SignupClick" Content="Registrar"
+                                Background="#2563EB" Foreground="White"
+                                FontWeight="SemiBold"
+                                Height="35" BorderThickness="0"/>
+                    </StackPanel>
+
+                    <!-- Lista de Usuários -->
+                    <ListBox ItemsSource="{Binding Managers}" Grid.Column="1" Margin="10"
+                             Background="White" BorderBrush="#E5E7EB" BorderThickness="1">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Email}"/>
-                                    <Button Content="Deletar" Command="{Binding Delete}"/>
-                                </StackPanel>
+                                <Border BorderBrush="#E5E7EB" BorderThickness="0 0 0 1" Padding="8">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Email}" FontSize="14" Margin="0,0,10,0"/>
+                                        <Button Content="Deletar" Command="{Binding Delete}"
+                                                Background="#DC2626" Foreground="White"
+                                                Padding="6,3" BorderThickness="0"/>
+                                    </StackPanel>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </TabItem>
         </TabControl>
-
     </Grid>
 </Window>

@@ -6,35 +6,83 @@
         xmlns:local="clr-namespace:WpfArasoi.View"
         mc:Ignorable="d"
         Title="ChampionshipView" Height="1080" Width="1920" WindowState="Maximized">
-    <Grid>
+
+    <Grid Background="#f0f0f0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
-            <!-- Name of championship field -->
-            <Label Content="Nome:"/>
-            <TextBox x:Name="NameTextBox"/>
+        <!-- Painel de cadastro/edição -->
+        <StackPanel Grid.Column="0" Margin="20" Background="White" VerticalAlignment="Top">
+            <Label Content="Nome:" FontWeight="Bold"/>
+            <TextBox x:Name="NameTextBox" Margin="0,0,0,10"/>
 
-            <!-- Date of begin field -->
-            <Label Content="Data de inicio"/>
-            <DatePicker x:Name="DateBeginDatePicker"/>
+            <Label Content="Data de início:" FontWeight="Bold"/>
+            <DatePicker x:Name="DateBeginDatePicker" Margin="0,0,0,10"/>
 
-            <!-- Date of end field -->
-            <Label Content="Data de fim"/>
-            <DatePicker x:Name="DateEndDatePicker"/>
+            <Label Content="Data de fim:" FontWeight="Bold"/>
+            <DatePicker x:Name="DateEndDatePicker" Margin="0,0,0,10"/>
 
-            <!-- Text field -->
-            <Label Content="Informações adicionais"/>
-            <TextBox x:Name="DescriptionTextBox" TextWrapping="Wrap"/>
+            <Label Content="Informações adicionais:" FontWeight="Bold"/>
+            <TextBox x:Name="DescriptionTextBox" TextWrapping="Wrap" Height="100" Margin="0,0,0,10"/>
 
-            <!-- Update -->
-            <Button Click="UpdateChampionshipClick" Content="Atualizar"/>
+            <Button Click="UpdateChampionshipClick" Content="Atualizar" Background="#007ACC" Foreground="White" Padding="8" />
         </StackPanel>
 
-        <StackPanel Grid.Column="1">
-            <Button Click="CreateBracketsClick" Content="Gerar chaves" />
+        <!-- Painel de chaves/brackets -->
+        <StackPanel Grid.Column="1" Margin="20">
+            <TextBlock Text="Chaves do campeonato" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+            <ListBox ItemsSource="{Binding Brackets}" Background="White" BorderBrush="#ccc" BorderThickness="1"
+             HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#ccc" BorderThickness="1" Margin="0,0,0,10" CornerRadius="5" Padding="10" 
+                        Background="#f9f9f9" HorizontalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Nome dos atletas -->
+                                <TextBlock Grid.Column="0" FontWeight="Bold">
+                                    <Run Text="AKA: "/>
+                                    <Run Text="{Binding AthleteNameAKA}"/>  
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" FontWeight="Bold">
+                                    <Run Text="AO: "/>
+                                    <Run Text="{Binding AthleteNameAO}"/>           
+                                </TextBlock>
+
+
+                                <!-- Pontuação -->
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Score Aka:" FontSize="10"/>
+                                    <TextBlock Text="{Binding ScoreAka}" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock Text="Score Ao:" FontSize="10"/>
+                                    <TextBlock Text="{Binding ScoreAo}" FontWeight="Bold"/>
+                                </StackPanel>
+
+                                <!-- Rodapé com faltas -->
+                                <StackPanel Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                                    <TextBlock Text="Faltas Aka: " FontSize="10"/>
+                                    <TextBlock Text="{Binding FoulAka}" FontSize="10" FontWeight="Bold" Margin="5,0,15,0"/>
+                                    <TextBlock Text="Faltas Ao: " FontSize="10"/>
+                                    <TextBlock Text="{Binding FoulAo}" FontSize="10" FontWeight="Bold" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Click="CreateBracketsClick" Content="Gerar chaves" Background="#28a745" Foreground="White" Padding="8" Margin="0,10,0,0"/>
         </StackPanel>
+
     </Grid>
 </Window>

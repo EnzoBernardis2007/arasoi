@@ -12,21 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfArasoi.Model;
+using WpfArasoi.ViewModel;
 
 namespace WpfArasoi.View
 {
     public partial class ChampionshipView : Window
     {
         ChampionshipModel championship;
+        ChampionshipViewModel championshipViewModel;
         public ChampionshipView(string championshipId)
         {
             InitializeComponent();
 
+            // Primeiro obtenha o campeonato
             championship = Championship.GetChampionship(championshipId);
 
+            // Depois inicialize o ViewModel com o Id correto
+            championshipViewModel = new ChampionshipViewModel(championship.Id);
+            this.DataContext = championshipViewModel;
+
+            // Preencha os campos da UI
             NameTextBox.Text = championship.Name;
             DateBeginDatePicker.SelectedDate = championship.DateBegin;
-            DateEndDatePicker.SelectedDate= championship.DateEnd;
+            DateEndDatePicker.SelectedDate = championship.DateEnd;
             DescriptionTextBox.Text = championship.Description;
         }
 

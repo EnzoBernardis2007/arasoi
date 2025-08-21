@@ -116,6 +116,7 @@
     <Compile Include="Model\ArasoiExceptions.cs" />
     <Compile Include="Model\Athlete.cs" />
     <Compile Include="Model\AthleteModel.cs" />
+    <Compile Include="Model\Bracket.cs" />
     <Compile Include="Model\BracketModel.cs" />
     <Compile Include="Model\CategoryModel.cs" />
     <Compile Include="Model\Championship.cs" />

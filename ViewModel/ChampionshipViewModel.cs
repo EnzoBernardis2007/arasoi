@@ -1,52 +1,130 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using WpfArasoi.Model;
+using System.Linq;
 
 namespace WpfArasoi.ViewModel
 {
     internal class ChampionshipViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<ManagerModel> _managers;
-        public ObservableCollection<ManagerModel> Managers
+        private ObservableCollection<BracketModel> _brackets;
+        public ObservableCollection<BracketModel> Brackets
         {
-            get => _managers;
+            get => _brackets;
             set
             {
-                if (_managers != value)
+                if (_brackets != value)
                 {
-                    _managers = value;
-                    OnPropertyChanged(nameof(Managers));
+                    _brackets = value;
+                    OnPropertyChanged(nameof(Brackets));
                 }
             }
         }
 
+        private string _championshipName;
+        public string ChampionshipName
+        {
+            get => _championshipName;
+            set
+            {
+                if (_championshipName != value)
+                {
+                    _championshipName = value;
+                    OnPropertyChanged(nameof(ChampionshipName));
+                }
+            }
+        }
+
+        private DateTime _dateBegin;
+        public DateTime DateBegin
+        {
+            get => _dateBegin;
+            set
+            {
+                if (_dateBegin != value)
+                {
+                    _dateBegin = value;
+                    OnPropertyChanged(nameof(DateBegin));
+                }
+            }
+        }
+
+        private DateTime _dateEnd;
+        public DateTime DateEnd
+        {
+            get => _dateEnd;
+            set
+            {
+                if (_dateEnd != value)
+                {
+                    _dateEnd = value;
+                    OnPropertyChanged(nameof(DateEnd));
+                }
+            }
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    OnPropertyChanged(nameof(Description));
+                }
+            }
+        }
+
+        public ChampionshipViewModel(string championshipId)
+        {
+            LoadChampionship(championshipId);
+            LoadBrackets(championshipId);
+        }
+
+        private void LoadChampionship(string championshipId)
+        {
+            // Simulação de consulta
+            var championship = Championship.GetChampionship(championshipId);
+            if (championship != null)
+            {
+                ChampionshipName = championship.Name;
+                DateBegin = championship.DateBegin;
+                DateEnd = championship.DateEnd;
+                Description = championship.Description;
+            }
+        }
+
+        private void LoadBrackets(string championshipId)
+        {
+            // Consulta os brackets do campeonato
+            var bracketsList = Bracket.GetBracketModels(championshipId);
+
+            Brackets = new ObservableCollection<BracketModel>(
+                bracketsList.OrderBy(b => b.CategoryId)
+            );
+        }
+
+        // Event de notificação
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ComboBoxItem[] CreateChampionshipsComboBox()
+        // Métodos para os botões
+        public void UpdateChampionship()
         {
-            ChampionshipModel[] championships = Championship.GetChampionships();
-            ComboBoxItem[] comboBoxItems = new ComboBoxItem[championships.Length];
-
-            for (int i = 0; i < championships.Length; i++)
+            var championship = new ChampionshipModel
             {
-                comboBoxItems[i] = new ComboBoxItem
-                {
-                    Content = StringFormatter.Capitalize(championships[i].Name),
-                    Tag = championships[i].Id
-                };
-            }
-
-            return comboBoxItems;
+                Name = ChampionshipName,
+                DateBegin = DateBegin,
+                DateEnd = DateEnd,
+                Description = Description
+            };
+            Championship.UpdateChampionship(championship);
         }
     }
 }

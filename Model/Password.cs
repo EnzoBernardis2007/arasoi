@@ -22,9 +22,14 @@ namespace WpfArasoi.Model
                 command.Parameters.AddWithValue("@email", email);
 
                 MySqlDataReader reader = command.ExecuteReader();
-                reader.Read();
+                if(reader.Read())
+                {
+                    return reader["salt"].ToString();
+                } else
+                {
+                    return null;
+                }
 
-                return reader["salt"].ToString();
             }
         }
 

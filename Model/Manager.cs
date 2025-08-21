@@ -74,9 +74,14 @@ namespace WpfArasoi.Model
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@id", ActualUser.Id);
                 MySqlDataReader reader = command.ExecuteReader();
-                reader.Read();
 
-                return reader["privileges_name"].ToString();
+                if(reader.Read())
+                {
+                    return reader["privileges_name"].ToString();
+                } else
+                {
+                    return null;
+                }
             }
         }
     }

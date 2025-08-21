@@ -5,33 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfArasoi.View"
         mc:Ignorable="d"
-        Title="Adicionar" Height="600" Width="500" WindowStartupLocation="CenterScreen">
-    <Grid x:Name="MainGrid">
+        Title="Adicionar Campeonato" Height="600" Width="500" WindowStartupLocation="CenterScreen"
+        Background="White">
+
+    <Grid Margin="30" x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <!-- Name of championship field -->
-        <Label Content="Nome:" Grid.Row="0" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="NameTextBox"  Grid.Row="1" Grid.ColumnSpan="2"/>
-        
-        <!-- Date of begin field -->
-        <Label Content="Data de inicio" Grid.Row="2" Grid.Column="0"/>
-        <DatePicker x:Name="DateBeginDatePicker" Grid.Row="3" Grid.Column="0"/>
 
-        <!-- Date of end field -->
-        <Label Content="Data de fim" Grid.Row="2" Grid.Column="1"/>
-        <DatePicker x:Name="DateEndDatePicker" Grid.Row="3" Grid.Column="1"/>
-        
-        <!-- Buttons -->
-        <Button Click="AddChampionshipClickFirstStep" Content="Confirmar" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <!-- Nome do campeonato -->
+        <Label Content="Nome:" Grid.Row="0" Grid.ColumnSpan="2"
+               FontSize="16" FontWeight="SemiBold" Foreground="#1E3A8A" Margin="0,0,0,5"/>
+        <TextBox x:Name="NameTextBox" Grid.Row="1" Grid.ColumnSpan="2"
+                 FontSize="14" Padding="8" BorderBrush="#1E3A8A" BorderThickness="1" Background="#F8FAFC" />
+
+        <!-- Data de início -->
+        <Label Content="Data de início:" Grid.Row="2" Grid.Column="0"
+               FontSize="16" FontWeight="SemiBold" Foreground="#1E3A8A" Margin="0,10,0,5"/>
+        <DatePicker x:Name="DateBeginDatePicker" Grid.Row="3" Grid.Column="0"
+                    FontSize="14" Padding="5" Background="#F8FAFC" BorderBrush="#1E3A8A" BorderThickness="1"/>
+
+        <!-- Data de fim -->
+        <Label Content="Data de fim:" Grid.Row="2" Grid.Column="1"
+               FontSize="16" FontWeight="SemiBold" Foreground="#1E3A8A" Margin="10,10,0,5"/>
+        <DatePicker x:Name="DateEndDatePicker" Grid.Row="3" Grid.Column="1"
+                    FontSize="14" Padding="5" Background="#F8FAFC" BorderBrush="#1E3A8A" BorderThickness="1"/>
+
+        <!-- Botão Confirmar -->
+        <Button Click="AddChampionshipClickFirstStep" Content="Confirmar" Grid.Row="4" Grid.ColumnSpan="2"
+                Background="#1E3A8A" Foreground="White" FontSize="16" FontWeight="Bold"
+                Padding="10" Margin="0,20,0,0" BorderThickness="0" HorizontalAlignment="Center"
+                Width="200" />
     </Grid>
 </Window>

@@ -188,18 +188,20 @@ namespace WpfArasoi.Model
 
             List<AthleteModel> anotherList = new List<AthleteModel>();
 
+            // Distribuindo atletas nas categorias
             for (int i = 0; i < categories.Count; i++)
             {
                 for (int j = athletes.Count - 1; j >= 0; j--)
                 {
-                    if (athletes[j].Sex != categories[i].Sex) continue;
+                    int birthYear = athletes[j].Birthday.Year;
+                    int minYear = categories[i].MinBirthYear.Year;
+                    int maxYear = categories[i].MaxBirthYear.Year;
+                    
+                    bool sexMatch = athletes[j].Sex == categories[i].Sex;
+                    bool yearMatch = birthYear >= minYear && birthYear <= maxYear;
+                    bool weightMatch = athletes[j].Weight >= categories[i].MinWeight && athletes[j].Weight <= categories[i].MaxWeight;
 
-                    bool isEarlier = athletes[j].Birthday <= categories[i].MaxBirthYear;
-                    bool isLater = athletes[j].Birthday >= categories[i].MinBirthYear;
-
-                    if (isEarlier && isLater &&
-                        athletes[j].Weight <= categories[i].MaxWeight &&
-                        athletes[j].Weight >= categories[i].MinWeight)
+                    if (sexMatch && yearMatch && weightMatch)
                     {
                         athletes[j].CategoryId = categories[i].Id;
                         anotherList.Add(athletes[j]);
@@ -208,9 +210,15 @@ namespace WpfArasoi.Model
                 }
             }
 
+
+            MessageBox.Show(anotherList.Count.ToString());
+            MessageBox.Show(athletes.Count.ToString());
+
+            // Embaralha os atletas
             Random random = new Random();
             anotherList = anotherList.OrderBy(a => random.Next()).ToList();
 
+            // Função interna para criar os brackets
             List<BracketModel> OrderAthletesByWeight(List<AthleteModel> givenAthletes)
             {
                 List<BracketModel> brackets = new List<BracketModel>();
@@ -270,38 +278,18 @@ namespace WpfArasoi.Model
                 return brackets;
             }
 
-            List<BracketModel> list = OrderAthletesByWeight(anotherList);
-            ToDatabase(list);
-
-            bool AthleteExists(MySqlConnection conn, string athleteId)
-            {
-                string query = "SELECT COUNT(*) FROM athlete WHERE id = @id";
-                var cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@id", athleteId);
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
-            }
-
-
+            // Insere no banco
             void ToDatabase(List<BracketModel> brackets)
             {
                 foreach (var item in brackets)
                 {
                     using (MySqlConnection connection = ConnectionFactory.GetConnection())
                     {
-                        /*
-                        // Verificar se os atletas existem
-                        if (!AthleteExists(connection, item.AthleteIdAKA) || !AthleteExists(connection, item.AthleteIdAO))
-                        {
-                            MessageBox.Show($"Erro: Atleta com ID inválido (AKA: {item.AthleteIdAKA}, AO: {item.AthleteIdAO})");
-                            continue;
-                        }
-                        */
-
                         string query = @"
-                INSERT INTO brackets 
-                    (category_id, athlete_id_AKA, athlete_id_AO, score_AKA, score_AO, foul_AKA, foul_AO)
-                VALUES 
-                    (@category_id, @athlete_id_AKA, @athlete_id_AO, @score_AKA, @score_AO, @foul_AKA, @foul_AO)";
+                    INSERT INTO brackets 
+                        (category_id, athlete_id_AKA, athlete_id_AO, score_AKA, score_AO, foul_AKA, foul_AO)
+                    VALUES 
+                        (@category_id, @athlete_id_AKA, @athlete_id_AO, @score_AKA, @score_AO, @foul_AKA, @foul_AO)";
 
                         var command = new MySqlCommand(query, connection);
 
@@ -320,6 +308,9 @@ namespace WpfArasoi.Model
                 MessageBox.Show("Chaves inseridas no banco com sucesso!");
             }
 
+            List<BracketModel> list = OrderAthletesByWeight(anotherList);
+            ToDatabase(list);
         }
+
     }
 }

@@ -10,6 +10,8 @@ namespace WpfArasoi.Model
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
+        public string AthleteNameAKA { get; set; }
+        public string AthleteNameAO { get; set; }
         public string AthleteIdAKA { get; set; }
         public string AthleteIdAO { get; set; }
         public int ScoreAka { get; set; } = 0;

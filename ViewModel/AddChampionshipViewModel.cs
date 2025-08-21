@@ -25,7 +25,8 @@ namespace WpfArasoi.ViewModel
                 Name = "DescriptionTextBox",
                 Text = "Insira a descrição aqui...",
                 VerticalAlignment = VerticalAlignment.Stretch,
-                HorizontalAlignment = HorizontalAlignment.Stretch
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                Height = 100,
             };
         }
 

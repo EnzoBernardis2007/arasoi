@@ -10,7 +10,7 @@ namespace WpfArasoi.Database
 {
     internal static class ConnectionFactory
     {
-        static readonly string infos = "Server=localhost;Database=arasoi_database;User Id=root;Password=;";
+        static readonly string infos = "Server=localhost;Database=arasoi_database;User Id=root;Password=#Ez253978;";
         public static MySqlConnection GetConnection()
         {
             try

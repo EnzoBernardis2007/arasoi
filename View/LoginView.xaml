@@ -3,22 +3,76 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfArasoi"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Login" Height="450" Width="800" WindowStartupLocation="CenterScreen"
+        Background="#F5F5F5" 
+        WindowStyle="None" 
+        ResizeMode="NoResize">
+
     <Grid>
-        <!-- Email field -->
-        <Label Content="Email" HorizontalAlignment="Left" Margin="340,159,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Center" Margin="0,190,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- Password field -->
-        <Label Content="Password" HorizontalAlignment="Left" Margin="340,215,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top" Width="120"/>
+        <Border Grid.Column="1" 
+                VerticalAlignment="Center" 
+                Padding="30"
+                Background="White" 
+                CornerRadius="12"
+                BorderBrush="#D9D9D9" 
+                BorderThickness="1" >
+            <StackPanel VerticalAlignment="Center">
 
-        <!-- Actions -->
-        <!-- Start login -->
-        <Button Content="Entrar" Click="LoginButton" HorizontalAlignment="Left" Margin="340,269,0,0" VerticalAlignment="Top"/>
-        <!-- Erase all infos in fields-->
-        <Button Content="Limpar" HorizontalAlignment="Left" Margin="420,269,0,0" VerticalAlignment="Top"/>
+                <!-- Título -->
+                <TextBlock Text="Arasoi" 
+                           FontSize="26" 
+                           FontWeight="Bold" 
+                           Foreground="#1E3A8A" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"/>
+
+                <!-- Email -->
+                <TextBlock Text="Email" 
+                           FontWeight="SemiBold" 
+                           Foreground="#444"/>
+                <TextBox x:Name="EmailTextBox" 
+                         Height="35" 
+                         Background="#F9FAFB"
+                         BorderBrush="#CBD5E1"
+                         BorderThickness="1"
+                         Padding="8"/>
+
+                <!-- Senha -->
+                <TextBlock Text="Senha" 
+                           FontWeight="SemiBold" 
+                           Foreground="#444"/>
+                <PasswordBox x:Name="PasswordBox" 
+                             Height="35" 
+                             Background="#F9FAFB"
+                             BorderBrush="#CBD5E1"
+                             BorderThickness="1"
+                             Padding="8"/>
+
+                <!-- Botões -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Button Content="Entrar" 
+                            Width="100" Height="35"
+                            Background="#2563EB" 
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"
+                            Click="LoginButton"/>
+
+                    <Button Content="Limpar" 
+                            Width="100" Height="35"
+                            Background="#E5E7EB" 
+                            Foreground="#111827"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
