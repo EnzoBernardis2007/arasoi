@@ -51,11 +51,13 @@ namespace WpfArasoi.View
         private void CreateBracketsClick(object sender, RoutedEventArgs e)
         {
             Championship.CreateBrackets(championship.Id);
+            championshipViewModel.RefreshBrackets(championship.Id); // atualiza a lista
         }
 
         private void DeleteBracketsClick(object sender, RoutedEventArgs e)
         {
             Championship.DeleteBrackets(championship.Id);
+            championshipViewModel.RefreshBrackets(championship.Id); // atualiza a lista
         }
     }
 }

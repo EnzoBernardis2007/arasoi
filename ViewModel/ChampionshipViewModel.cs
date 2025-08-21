@@ -126,5 +126,11 @@ namespace WpfArasoi.ViewModel
             };
             Championship.UpdateChampionship(championship);
         }
+
+        public void RefreshBrackets(string championshipId)
+        {
+            LoadBrackets(championshipId);
+        }
+
     }
 }

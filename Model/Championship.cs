@@ -210,10 +210,6 @@ namespace WpfArasoi.Model
                 }
             }
 
-
-            MessageBox.Show(anotherList.Count.ToString());
-            MessageBox.Show(athletes.Count.ToString());
-
             // Embaralha os atletas
             Random random = new Random();
             anotherList = anotherList.OrderBy(a => random.Next()).ToList();
