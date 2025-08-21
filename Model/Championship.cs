@@ -287,9 +287,9 @@ namespace WpfArasoi.Model
                     {
                         string query = @"
                     INSERT INTO brackets 
-                        (category_id, athlete_id_AKA, athlete_id_AO, score_AKA, score_AO, foul_AKA, foul_AO)
+                        (category_id, athlete_id_AKA, athlete_id_AO, score_AKA, score_AO, foul_AKA, foul_AO, championship_id)
                     VALUES 
-                        (@category_id, @athlete_id_AKA, @athlete_id_AO, @score_AKA, @score_AO, @foul_AKA, @foul_AO)";
+                        (@category_id, @athlete_id_AKA, @athlete_id_AO, @score_AKA, @score_AO, @foul_AKA, @foul_AO, @championship_id)";
 
                         var command = new MySqlCommand(query, connection);
 
@@ -300,6 +300,7 @@ namespace WpfArasoi.Model
                         command.Parameters.AddWithValue("@score_AO", item.ScoreAo);
                         command.Parameters.AddWithValue("@foul_AKA", item.FoulAka);
                         command.Parameters.AddWithValue("@foul_AO", item.FoulAo);
+                        command.Parameters.AddWithValue("@championship_id", championshipId);
 
                         command.ExecuteNonQuery();
                     }

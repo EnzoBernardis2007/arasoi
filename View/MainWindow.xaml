@@ -138,6 +138,10 @@
                     </ListBox>
                 </Grid>
             </TabItem>
+
+            <TabItem Header="Mensagens">
+                
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

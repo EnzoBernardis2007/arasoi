@@ -52,5 +52,10 @@ namespace WpfArasoi.View
         {
             Championship.CreateBrackets(championship.Id);
         }
+
+        private void DeleteBracketsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
