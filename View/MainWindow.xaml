@@ -139,8 +139,29 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Mensagens">
-                
+            <TabItem Header="Usuários" FontWeight="Bold" Foreground="#1E3A8A" Height="20" VerticalAlignment="Bottom">
+                <Grid Margin="50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="7*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Assunto:" Grid.Column="0" />
+                    <TextBox Grid.Row="0" Grid.Column="1"/>
+                    <TextBlock Text="Público" Grid.Row="1" Grid.Column="0" />
+                    <ComboBox Grid.Row="1" Grid.Column="1">
+                        <ComboBoxItem Content="Texto" />
+                    </ComboBox>
+                    <TextBlock Text="Texto:" Grid.Row="2" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Row="3" FontWeight="Normal" Padding="10" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+                    <Button Content="Enviar" Grid.Row="4" Grid.ColumnSpan="2"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

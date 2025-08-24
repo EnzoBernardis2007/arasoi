@@ -45,7 +45,7 @@ namespace WpfArasoi.Model
         {
             Name = name;
             DateBegin = dateBegin;
-            DateEnd = dateEnd;
+            DateEnd = dateEnd; 
         }
 
         public void DeleteMyself()
