@@ -83,5 +83,48 @@ namespace WpfArasoi.View
         {
             WindowManager.ShowOrFocusWindow<AddChampionshipView>();
         }
+
+        private void PublicCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = (PublicCombo.SelectedItem as ComboBoxItem)?.Tag?.ToString();
+
+            if (selected == "registered")
+            {
+                CollapsedComboBox.Visibility = Visibility.Visible;
+
+                // Preencher sem duplicar
+                CollapsedComboBox.Items.Clear();
+
+                foreach (var item in viewModel.CreateChampionshipsComboBox())
+                {
+                    CollapsedComboBox.Items.Add(item);
+                }
+            }
+            else
+            {
+                CollapsedComboBox.Visibility = Visibility.Collapsed;
+                CollapsedComboBox.Items.Clear();
+            }
+        }
+
+        private void SendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedRecipient = (PublicCombo.SelectedItem as ComboBoxItem)?.Tag?.ToString();
+            string championshipId = null;
+
+            if (selectedRecipient == "registered")
+            {
+                // Pega o campeonato escolhido na ComboBox colapsada
+                championshipId = (CollapsedComboBox.SelectedItem as ComboBoxItem)?.Tag?.ToString();
+            }
+
+            Message.CreateMessage(
+                Subject.Text,
+                Text.Text,
+                selectedRecipient,
+                championshipId
+            );
+        }
+
     }
 }

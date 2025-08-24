@@ -120,5 +120,22 @@ namespace WpfArasoi.ViewModel
         /* -----------------------------
          * |    CHAMPIONSHIPS TAB ↑    |
          * ----------------------------- */
+
+        public ComboBoxItem[] CreateChampionshipsComboBox()
+        {
+            ChampionshipModel[] championships = Championship.GetChampionships();
+            ComboBoxItem[] comboBoxItems = new ComboBoxItem[championships.Length];
+
+            for (int i = 0; i < championships.Length; i++)
+            {
+                comboBoxItems[i] = new ComboBoxItem
+                {
+                    Content = StringFormatter.Capitalize(championships[i].Name),
+                    Tag = championships[i].Id,
+                };
+            }
+
+            return comboBoxItems;
+        }
     }
 }

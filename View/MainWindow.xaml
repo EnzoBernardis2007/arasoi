@@ -152,17 +152,26 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="8*" />
                     </Grid.ColumnDefinitions>
+
                     <TextBlock Text="Assunto:" Grid.Column="0" />
-                    <TextBox Grid.Row="0" Grid.Column="1"/>
-                    <TextBlock Text="Público" Grid.Row="1" Grid.Column="0" />
-                    <ComboBox Grid.Row="1" Grid.Column="1">
-                        <ComboBoxItem Content="Texto" />
+                    <TextBox Grid.Row="0" x:Name="Subject" Grid.Column="1"/>
+
+                    <TextBlock Text="Público:" Grid.Row="1" Grid.Column="0" />
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="PublicCombo" SelectionChanged="PublicCombo_SelectionChanged">
+                        <ComboBoxItem Content="Público geral" Tag="global"/>
+                        <ComboBoxItem Content="Apenas atletas" Tag="athletes"/>
+                        <ComboBoxItem Content="Apenas inscritos em um torneio" Tag="registered"/>
                     </ComboBox>
-                    <TextBlock Text="Texto:" Grid.Row="2" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="3" FontWeight="Normal" Padding="10" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
-                    <Button Content="Enviar" Grid.Row="4" Grid.ColumnSpan="2"/>
+
+                    <!-- ComboBox extra escondida por padrão -->
+                    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CollapsedComboBox" Visibility="Collapsed" />
+
+                    <TextBlock Text="Texto:" Grid.Row="3" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Row="3" x:Name="Text" FontWeight="Normal" Padding="10" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+                    <Button Content="Enviar" Click="SendMessage_Click" Grid.Row="4" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
+
         </TabControl>
     </Grid>
 </Window>
